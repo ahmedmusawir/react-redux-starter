@@ -6,12 +6,14 @@ import {
 } from './actionTypes';
 
 export const getPosts = () => async (dispatch) => {
-  const res = await axios.get(`${REST_URL}/posts`); // 1st 10 posts
-  // const res = await axios.get(`${REST_URL}/posts?_start=0&_end=10`); // 1st 10 posts
+  // const res = await axios.get(`${REST_URL}/posts`);
+
+  const posts = postData; // Local test data
 
   dispatch({
     type: GET_POSTS,
-    payload: res.data,
+    payload: posts,
+    // payload: res.data,
   });
 };
 
