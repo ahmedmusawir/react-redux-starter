@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import InputGroup from '../../components/layout/InputGroup';
 import InputTextarea from '../../components/layout/InputTextarea';
-import uuid from 'uuid';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPost } from '../../store/actions/postActions';
+import { editPost } from '../../store/actions/postActions';
+import { getPost } from '../../store/actions/postActions';
 
-export class AddPost extends Component {
+export class EditPost extends Component {
   static propTypes = {
-    addPost: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired,
+    editPost: PropTypes.func.isRequired,
+    getPost: PropTypes.func.isRequired,
   };
+
   state = {
     id: '',
     title: '',
@@ -17,7 +20,43 @@ export class AddPost extends Component {
     errors: {},
   };
 
-  onSubmit = e => {
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   console.log
+  //   const { id, title, body } = nextProps.post;
+  //   if (nextProps.post !== prevState.post) {
+  //     return {
+  //       id,
+  //       title,
+  //       body,
+  //     };
+  //   }
+
+  //   return null;
+  // }
+
+  // componentWillReceiveProps(nextProps, nextState) {
+  //   const { id, title, body } = nextProps.post;
+  //   console.log(`Next Props in Will Receive Props: ${nextProps.post.title}`);
+
+  //   this.setState({
+  //     id,
+  //     title,
+  //     body,
+  //   });
+  // }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getPost(id);
+  }
+
+  componentDidUpdate(props, state, snapshot) {
+    if (this.props.post !== props.post) {
+      this.setState(this.props.post);
+    }
+  }
+
+  onSubmit = async (e) => {
     e.preventDefault();
     const { title, body } = this.state;
 
@@ -40,14 +79,18 @@ export class AddPost extends Component {
       return;
     }
 
-    const newPost = {
-      id: uuid(),
+    const { id } = this.props.match.params;
+
+    const updatedPost = {
+      id,
       title,
       body,
     };
+    //Filling the form with user data to be edited
+    this.props.getPost(id);
 
-    //Adding Data to Redux
-    this.props.addPost(newPost);
+    //Put Request
+    this.props.editPost(updatedPost);
 
     //Clear State
     this.setState({
@@ -56,11 +99,11 @@ export class AddPost extends Component {
       errors: {},
     });
 
-    //Redirect to Posts/Blog page
+    //Redirect to Home
     this.props.history.push('/posts');
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -71,10 +114,11 @@ export class AddPost extends Component {
       <div className="add-post-from-container animated slideInLeft pt-5">
         <div className="card mb-3">
           <div className="card-header text-danger">
-            <strong>Add Post</strong>
+            <strong>Edit Post</strong>
           </div>
           <div className="card-body">
-            <form onSubmit={this.onSubmit}>
+            <h5>Article ID: {id}</h5>
+            <form onSubmit={this.onSubmit.bind(this)}>
               <div className="">
                 <InputGroup
                   name="title"
@@ -100,7 +144,7 @@ export class AddPost extends Component {
                   <input
                     type="submit"
                     className="form-control form-control-lg btn btn-light mt-2"
-                    value="Add Post"
+                    value="Update Post"
                   />
                 </div>
               </div>
@@ -112,9 +156,12 @@ export class AddPost extends Component {
   }
 }
 
-const mapDispatchToProps = { addPost };
+const mapStateToProps = (state) => ({
+  post: state.postReducer.post,
+});
+const mapDispatchToProps = { editPost, getPost };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
-)(AddPost);
+)(EditPost);

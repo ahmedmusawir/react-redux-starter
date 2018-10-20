@@ -6,8 +6,7 @@ import {
 } from './actionTypes';
 
 export const getPosts = () => async (dispatch) => {
-  const res = await axios.get(`${REST_URL}/posts`); // 1st 10 posts
-  // const res = await axios.get(`${REST_URL}/posts?_start=0&_end=10`); // 1st 10 posts
+  const res = await axios.get(`${REST_URL}/posts`);
 
   dispatch({
     type: GET_POSTS,
@@ -25,7 +24,7 @@ export const getPost = id => async (dispatch) => {
 };
 
 export const addPost = post => async (dispatch) => {
-  const res = await axios.post('${REST_URL}/posts', post);
+  const res = await axios.post(`${REST_URL}/posts`, post);
 
   dispatch({
     type: ADD_POST,

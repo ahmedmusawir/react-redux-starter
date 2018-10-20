@@ -23,14 +23,14 @@ const InputGroup = (props) => {
   );
 };
 
-// InputGroup.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   type: PropTypes.string.isRequired,
-//   value: PropTypes.string.isRequired,
-//   placeholder: PropTypes.string.isRequired,
-//   error: PropTypes.string,
-//   onChange: PropTypes.func.isRequired,
-// };
+InputGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+};
 InputGroup.defaultProps = {
   type: 'text',
 };

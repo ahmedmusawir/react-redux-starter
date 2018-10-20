@@ -20,50 +20,19 @@ export class EditPost extends Component {
     errors: {},
   };
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   const { id, title, body } = nextProps.post;
-  //   if (nextProps.post !== prevState.post) {
-  //     return {
-  //       id,
-  //       title,
-  //       body,
-  //     };
-  //   }
-
-  //   return null;
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log(this.props.post);
-  //   console.log(prevState);
-  //   const { id, title, body } = this.props.post;
-
-  //   if (prevState == this.props.post) {
-  //     this.setState({
-  //       id,
-  //       title,
-  //       body,
-  //     });
-  //   }
-  // }
-
-  componentWillReceiveProps(nextProps, nextState) {
-    const { id, title, body } = nextProps.post;
-    console.log(`Next Props in Will Receive Props: ${nextProps.post.title}`);
-
-    this.setState({
-      id,
-      title,
-      body,
-    });
-  }
-
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getPost(id);
   }
 
-  onSubmit = async (e) => {
+  // THE FOLLOWING WAS USED TO REPLACE componentWillReceiveProps OUT CODE
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.post !== prevProps.post) {
+      this.setState(this.props.post);
+    }
+  }
+
+  onSubmit = async e => {
     e.preventDefault();
     const { title, body } = this.state;
 
@@ -106,16 +75,17 @@ export class EditPost extends Component {
       errors: {},
     });
 
-    //Redirect to Home
+    //Redirect to Posts/Blog page
     this.props.history.push('/posts');
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
     const { id, title, body, errors } = this.state;
+    // console.log(this.state.post);
 
     return (
       <div className="add-post-from-container animated slideInLeft pt-5">
@@ -163,9 +133,12 @@ export class EditPost extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  post: state.postReducer.post,
-});
+const mapStateToProps = state => {
+  // console.log(state);
+  return {
+    post: state.postReducer.post,
+  };
+};
 const mapDispatchToProps = { editPost, getPost };
 
 export default connect(

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Post from './Post';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Post from './Post';
 import { connect } from 'react-redux';
 import { getPosts } from '../../store/actions/postActions';
 
@@ -20,8 +21,19 @@ export class Posts extends Component {
     return (
       <div className="home-page pt-5">
         <h1 className="text-center mb-4">Redux Post List</h1>
+        <div className="row mb-5">
+          <Link className="btn btn-secondary btn-block float-right" to={`/posts/add`}>
+            <i
+              className="fa fa-pencil pr-3 pt-1"
+              aria-hidden="true"
+              style={{ cursor: 'pointer' }}
+            />
+            Add A Post
+          </Link>
+        </div>
+
         <div className="row">
-          {posts.map((post) => (
+          {posts.map(post => (
             <Post key={post.id} id={post.id} title={post.title} body={post.body} />
           ))}
         </div>
@@ -30,7 +42,7 @@ export class Posts extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   posts: state.postReducer.posts,
 });
 

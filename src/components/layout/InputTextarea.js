@@ -26,12 +26,12 @@ const InputTextarea = (props) => {
   );
 };
 
-// InputTextarea.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   value: PropTypes.string.isRequired,
-//   placeholder: PropTypes.string.isRequired,
-//   error: PropTypes.string,
-//   onChange: PropTypes.func.isRequired,
-// };
+InputTextarea.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default InputTextarea;
