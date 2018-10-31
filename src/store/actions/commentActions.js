@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REST_URL } from './constants';
+import { REST_COMMENTS_URL } from './constants';
 import {
   GET_COMMENTS,
   GET_COMMENT,
@@ -9,7 +9,7 @@ import {
 } from './actionTypes';
 
 export const getComments = () => async (dispatch) => {
-  const res = await axios.get(`${REST_URL}/comments`);
+  const res = await axios.get(`${REST_COMMENTS_URL}/comments`);
 
   dispatch({
     type: GET_COMMENTS,
@@ -18,7 +18,7 @@ export const getComments = () => async (dispatch) => {
 };
 
 export const getComment = id => async (dispatch) => {
-  const res = await axios.get(`${REST_URL}/comments/${id}`);
+  const res = await axios.get(`${REST_COMMENTS_URL}/comments/${id}`);
 
   dispatch({
     type: GET_COMMENT,
@@ -27,7 +27,7 @@ export const getComment = id => async (dispatch) => {
 };
 
 export const addComment = comment => async (dispatch) => {
-  const res = await axios.post(`${REST_URL}/comments`, comment);
+  const res = await axios.post(`${REST_COMMENTS_URL}/comments`, comment);
 
   dispatch({
     type: ADD_COMMENT,
@@ -36,7 +36,7 @@ export const addComment = comment => async (dispatch) => {
 };
 
 export const editComment = comment => async (dispatch) => {
-  const res = await axios.put(`${REST_URL}/comments/${comment.id}`, comment);
+  const res = await axios.put(`${REST_COMMENTS_URL}/comments/${comment.id}`, comment);
 
   dispatch({
     type: EDIT_COMMENT,
@@ -45,7 +45,7 @@ export const editComment = comment => async (dispatch) => {
 };
 
 export const deleteComment = id => async (dispatch) => {
-  await axios.delete(`${REST_URL}/comments/${id}`);
+  await axios.delete(`${REST_COMMENTS_URL}/comments/${id}`);
 
   dispatch({
     type: DELETE_COMMENT,
