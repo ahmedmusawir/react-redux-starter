@@ -32,7 +32,7 @@ const Nav = ({ branding }) => (
         </li>
         <li className="nav-item">
           <NavLink to="/posts" className="nav-link">
-            Blogs
+            Posts
           </NavLink>
         </li>
         <li className="nav-item">
