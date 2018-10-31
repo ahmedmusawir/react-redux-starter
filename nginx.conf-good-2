@@ -53,9 +53,7 @@ http {
     
         # Any route that doesn't have a file extension (e.g. /devices)
         location / {
-            if (!-e $request_filename){
-                rewrite ^(.*)$ /index.html break;
-            }
+            try_files $uri $uri/ /index.html;
         }
 
 

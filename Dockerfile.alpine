@@ -1,7 +1,5 @@
-FROM httpd:2.4
+FROM httpd:2.4-alpine
 MAINTAINER Moose
-
-COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 
 WORKDIR /usr/local/apache2/htdocs/
 
